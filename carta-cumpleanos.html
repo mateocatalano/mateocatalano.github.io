@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz cumple abuela! ♥</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💌</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="particulas" class="particulas"></div>
+
+    <div class="flor">🌸</div>
+    <div class="flor">🌷</div>
+    <div class="flor">✨</div>
+    <div class="flor">🌼</div>
+    <div class="flor">💕</div>
+    <div class="flor">🦋</div>
+    <div class="flor">🌺</div>
+    
+    <!-- Magia extra -->
+    <div class="corazon">💖</div>
+    <div class="corazon">💗</div>
+    <div class="destello">⭐</div>
+    <div class="destello">🌟</div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="escena">
+        <div id="sobre-wrap" class="sobre-wrap">
+            <div class="sobre">
+                <div class="sobre-solapa"></div>
+                <div class="sobre-cuerpo">
+                    <div class="sobre-interno">
+                        <div class="sobre-icono">✉️</div>
+                        <p class="sobre-texto">Para la abuela más linda</p>
+                        <button class="btn-abrir" onclick="abrirCarta()">Abrir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="carta" class="carta">
+            <div class="carta-inner">
+                <div class="cinta t1"></div>
+                <div class="cinta t2"></div>
+                <div class="sello">♥</div>
+
+                <h1 class="titulo">Feliz cumple abuela!♥</h1>
+
+                <div class="fotos">
+                    <div class="polaroid r1">
+                        <img src="imagen1.jpeg" alt="Recuerdo">
+                    </div>
+                    <div class="polaroid r2">
+                        <img src="WhatsApp%20Image%202026-03-20%20at%207.03.06%20PM.jpeg" alt="Momento especial">
+                    </div>
+                    <div class="polaroid r3">
+                        <img src="WhatsApp%20Image%202026-03-20%20at%207.03.07%20PM.jpeg" alt="Juntos">
+                    </div>
+                </div>
+
+                <div class="deco">♡ ♡ ♡</div>
+
+                <div class="mensaje">
+                    <p>Abuelita, hoy es tu día y quería recordarte lo importante que sos para mí.</p>
+                    <p>Cada momento que pasamos juntos es especial. Tus abrazos, tus comidas, tus historias… todo eso vale oro. Que este cumple esté lleno de alegría y de la gente que te quiere.</p>
+                    <p>Te amo.</p>
+                </div>
+
+                <div class="deco">— · —</div>
+
+                <p class="firma">Mateo</p>
+
+                <button id="btn-magia" class="btn-magia" title="¡Para vos abuela!">💖</button>
+                <button id="btn-replay" class="btn-replay">Ver de nuevo</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <span id="lightbox-cerrar" class="lightbox-cerrar">×</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
