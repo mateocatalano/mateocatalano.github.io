@@ -82,6 +82,7 @@ window.abrirCarta = function() {
         document.getElementById('carta').classList.add('visible');
         document.getElementById('btn-magia')?.classList.add('visible');
         document.getElementById('btn-replay')?.classList.add('visible');
+        document.getElementById('btn-descargar')?.classList.add('visible');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         crearParticulas();
         confeti();
@@ -94,6 +95,7 @@ function cerrarCarta() {
     document.getElementById('carta')?.classList.remove('visible');
     document.getElementById('btn-magia')?.classList.remove('visible');
     document.getElementById('btn-replay')?.classList.remove('visible');
+    document.getElementById('btn-descargar')?.classList.remove('visible');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -142,6 +144,72 @@ function explosionMagica(event) {
     
     // Confeti extra on click
     confeti(30);
+}
+
+async function descargarImagenes() {
+    // Festejo primero (instantáneo)
+    const modal = document.getElementById('modal-descarga');
+    if (modal) modal.classList.add('activo');
+    
+    confeti(100);
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); 
+        osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); 
+        osc.frequency.setValueAtTime(1046.50, audioCtx.currentTime + 0.3);
+        
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.7);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.7);
+    } catch(e) {}
+
+    const imagenes = [
+        'imagen1.jpeg',
+        'WhatsApp Image 2026-03-20 at 7.03.06 PM.jpeg',
+        'WhatsApp Image 2026-03-20 at 7.03.07 PM.jpeg'
+    ];
+    
+    // Truco para forzar descarga: usar fetch para generar un objeto Blob local
+    for (const imgSrc of imagenes) {
+        try {
+            const response = await fetch(imgSrc);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = imgSrc; // Nombre del archivo que se descargará
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Liberar memoria
+            setTimeout(() => window.URL.revokeObjectURL(url), 5000);
+        } catch (error) {
+            console.error('Error usando fetch, usando fallback', error);
+            // Fallback en caso de que fetch falle (por ejemplo por block de CORS local)
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = imgSrc;
+            a.download = imgSrc;
+            a.target = '_blank'; // Al menos abrir en ventana nueva para no romper la carta
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        
+        // Pausa breve entre cada imagen para que el navegador procese los archivos individualmente
+        await new Promise(r => setTimeout(r, 400));
+    }
 }
 
 // Confeti
@@ -255,6 +323,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initLightbox();
 
     document.getElementById('btn-magia')?.addEventListener('click', explosionMagica);
+    document.getElementById('btn-descargar')?.addEventListener('click', descargarImagenes);
+    document.getElementById('modal-cerrar')?.addEventListener('click', () => {
+        document.getElementById('modal-descarga')?.classList.remove('activo');
+    });
 
     document.getElementById('btn-replay')?.addEventListener('click', () => {
         cerrarCarta();
